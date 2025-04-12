@@ -1,5 +1,5 @@
 # Use an official CUDA runtime with Ubuntu as a parent image
-FROM nvidia/cuda:12.1.0-runtime-ubuntu22.04
+FROM nvidia/cuda:12.8.1-runtime-ubuntu22.04
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -15,6 +15,9 @@ RUN pip3 install --no-cache-dir --upgrade pip
 
 # Set the working directory in the container
 WORKDIR /app
+
+# Pull nightly pytorch for RTX 50x0 support
+RUN pip install --no-cache-dir --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
 
 # Get requirements
 COPY pyproject.toml .
